@@ -9,6 +9,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     key.classList.add('playing');
   }
 
+  function playSoundClick(e) {
+    const targetValue = e.target.closest('div.key').attributes['data-key'].value;
+    const audio = document.querySelector(`audio[data-key='${targetValue}']`);
+    const key = document.querySelector(`.key[data-key='${targetValue}']`);
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add('playing');
+  }
+
   function removeTransition(e) {
     if(e.propertyName !== 'transform') return;
     this.classList.remove('playing');
@@ -17,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   window.addEventListener('keydown', playSound);
   const keys = document.querySelectorAll(`.key`);
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  keys.forEach(key => key.addEventListener('click', playSoundClick));
 
 });
 
