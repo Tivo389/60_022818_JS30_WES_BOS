@@ -8,8 +8,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     audio.play();
     key.classList.add('playing');
   }
-
   function playSoundClick(e) {
+    const targetValue = e.target.closest('div.key').attributes['data-key'].value;
+    const audio = document.querySelector(`audio[data-key='${targetValue}']`);
+    const key = document.querySelector(`.key[data-key='${targetValue}']`);
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add('playing');
+  }
+
+  function playSoundTouch(e) {
+    e.preventDefault();
     const targetValue = e.target.closest('div.key').attributes['data-key'].value;
     const audio = document.querySelector(`audio[data-key='${targetValue}']`);
     const key = document.querySelector(`.key[data-key='${targetValue}']`);
@@ -27,7 +36,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const keys = document.querySelectorAll(`.key`);
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
   keys.forEach(key => key.addEventListener('click', playSoundClick));
-  keys.forEach(key => key.addEventListener('touchstart', playSoundClick));
+
+  window.addEventListener('touchstart', function() {
+    keys.forEach(key => key.addEventListener('touchstart', playSoundTouch));
+  });
 
 });
 
