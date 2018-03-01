@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const keys = document.querySelectorAll(`.key`);
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
   keys.forEach(key => key.addEventListener('click', playSoundClick));
+  keys.forEach(key => key.addEventListener('touchstart', playSoundClick));
 
 });
 
