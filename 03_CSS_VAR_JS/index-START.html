@@ -11,6 +11,7 @@
     <label for="spacing">Spacing:</label>
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
 
+
     <label for="blur">Blur:</label>
     <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
 
@@ -21,6 +22,23 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      box-sizing: border-box;
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+      width: 85vw;
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,6 +63,18 @@
   </style>
 
   <script>
+    const inputs = document.querySelectorAll('.controls input');
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    function handleUpdate() {
+      // '.dataset' returns all the attributes with 'data-' from the element
+      // In this case we've narrowed it down to 'data-sizing'.
+      // If 'this' doesn't have 'data-sizing', then return an empty string.
+      const suffix = this.dataset.sizing || '';
+      // We declared the css properties in the ':root' element which is the equivalent of the html.
+      // 'document.documentElement' = <html>...</html>
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
   </script>
 
 </body>
