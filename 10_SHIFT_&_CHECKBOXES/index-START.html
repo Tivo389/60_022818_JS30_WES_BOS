@@ -98,7 +98,64 @@
     </div>
   </div>
 
+
 <script>
+// VERSION 2 NO VIDEO
+const checkBoxes = document.querySelectorAll('input[type=checkbox]');
+let lastChecked;
+function handleCheckBox(e) {
+  let stateWillCheck = false;
+  if(e.shiftKey && this.checked) {
+    checkBoxes.forEach(checkBox => {
+      if(checkBox === this || checkBox === lastChecked) {
+        stateWillCheck = !stateWillCheck
+      }
+      if(stateWillCheck) {
+        checkBox.checked = true;
+      }
+    });
+  }
+  lastChecked = this;
+}
+checkBoxes.forEach(checkBox => checkBox.addEventListener('click', handleCheckBox));
+
+// VERSION 1 FOLLOW THROUGH
+  // const checkBoxes = document.querySelectorAll('input[type=checkbox]');
+  // let lastChecked;
+  // function handleCheckBox(e) {
+  //   let inBetween = false;                                       // The default state of the function (NOT THE CHECKBOX)
+  //   if(e.shiftKey && this.checked) {                             // If the shiftKey is pressed && the checkBox I just clicked is now checked...
+  //     checkBoxes.forEach(checkBox => {                           // Run the following code block for each checkBox...
+  //       if(checkBox === this || checkBox === lastChecked) {      // If the checkBox is the one I just clicked || the checkBox is the last one I clicked...
+  //         inBetween = !inBetween;                                // 'Switch' the state of the function. true => false, false => true.
+  //       }
+  //       if(inBetween) {                                          // While the forEach is looping through each checkBox between the 'lastChecked' and 'this', the 'inBetween' state is 'true'.
+  //         checkBox.checked = true;
+  //       }
+  //     });
+  //   }
+  //   lastChecked = this;                                          // This is a record of the last checkBox I clicked
+  // }
+  // checkBoxes.forEach(checkBox => checkBox.addEventListener('click', handleCheckBox));
+  // WES BOS Train of thought
+  // 01. Keep a record of what I just clicked.
+  // 02. When I click an unchecked box while pressing shift start a loop.
+  // 03. For each checkbox see if it's either the 'last one I clicked' or 'the one I just Shift-clicked'.
+  // 04. If it is, switch the state of the 'inBetween' on/off.
+  // 05. Now all checkBoxes that are between the 'last one I clicked' and 'the one I just Shift-clicked' will become checked.
 </script>
+
+
+
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
