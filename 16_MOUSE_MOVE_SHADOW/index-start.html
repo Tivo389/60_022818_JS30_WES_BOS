@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <!-- <h1 contenteditable>🔥WOAH!</h1> -->
+    <h1 contenteditable>🐛</h1>
+    <!-- <h1 contenteditable>🍄</h1> -->
+    <!-- <h1 contenteditable>🦆</h1> -->
+    <!-- <h1 contenteditable>👻</h1> -->
+  </div>
+
+  <style>
+  html {
+    color:black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:black;
+  }
+
+  h1 {
+    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    font-size: 50px;
+  }
+  </style>
+
+<script>
+  const hero = document.querySelector('.hero');
+  const text = hero.querySelector('h1');
+  const walk = 250;
+
+  function shadow(e) {
+    const {offsetWidth:w,offsetHeight:h} = hero;
+    let {offsetX:x,offsetY:y} = e;
+    if(this !== e.target) {  // Note that 'e.target' refers to 'the current target of the event (mouse)'. If its moving over 'h1' the target is 'h1' not 'hero'.
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+
+    }
+    const xWalk = Math.round((x / w * walk) - (walk / 2));
+    const yWalk = Math.round((y / h * walk) - (walk / 2));
+
+    text.style.textShadow = `
+      ${xWalk}px ${yWalk}px 6px rgba(255,0,255,0.7),
+      ${-xWalk}px ${yWalk}px 6px rgba(0,255,255,0.7),
+      ${xWalk}px ${-yWalk}px 6px rgba(0,0,255,0.7),
+      ${-xWalk}px ${-yWalk}px 6px rgba(0,255,0,0.7)
+    `;
+  }
+
+  hero.addEventListener('mousemove', shadow);
+
+</script>
+</body>
+</html>
