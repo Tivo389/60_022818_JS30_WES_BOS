@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="body">
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+  <div class="oneA">
+    <div class="twoB">
+      <div class="threeC">
+      </div>
+    </div>
+  </div>
+
+<button></button>
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after { box-sizing: inherit; }
+
+  div {
+    width:100%;
+    padding:100px;
+  }
+
+  .one, .threeC {
+    background: thistle;
+  }
+
+  .two, .twoB {
+    background:mistyrose;
+  }
+
+  .three, .oneA {
+    background:coral;
+  }
+</style>
+
+<script>
+const divs = document.querySelectorAll('div');
+const btn = document.querySelector('button');
+
+function logText(e) {
+  console.log(this.classList.value);
+  // e.stopPropagation();
+}
+// Propagation is a blanket term for both 'capture' and 'bubbling'
+divs.forEach(div => div.addEventListener('click', logText, {capture:true}));  // => Capture inwards
+// divs.forEach(div => div.addEventListener('click', logText, {capture:false})); // => Bubble outwards
+// divs.forEach(div => div.addEventListener('click', logText, {capture:false, once:true}));
+
+btn.addEventListener('click', () => {
+  console.log('Click!');
+}, {
+  once:true
+});
+</script>
+</body>
+</html>
